@@ -98,19 +98,19 @@ public class TViewUtil {
                     @Override
                     public void onItemRangeChanged(int positionStart, int itemCount) {
                         super.onItemRangeChanged(positionStart, itemCount);
-                        toggleRecyclerViewVisibility(itemCount > 0);
+                        toggleRecyclerViewVisibility(recyclerView, emptyView, itemCount > 0);
                     }
         
                     @Override
                     public void onItemRangeInserted(int positionStart, int itemCount) {
                         super.onItemRangeInserted(positionStart, itemCount);
-                        toggleRecyclerViewVisibility(itemCount > 0);
+                        toggleRecyclerViewVisibility(recyclerView, emptyView, itemCount > 0);
                     }
                     
                     @Override
                     public void onChanged() {
                         super.onChanged();
-                        toggleRecyclerViewVisibility(adapter.getItemCount() > 0);
+                        toggleRecyclerViewVisibility(recyclerView, emptyView, itemCount > 0);
                     }
                 };
                 adapter.registerAdapterDataObserver(observer);
@@ -122,7 +122,7 @@ public class TViewUtil {
 
         }
         
-        private void toggleRecyclerViewVisibility(RecyclerView view, boolean isVisible) {
+        private void toggleRecyclerViewVisibility(RecyclerView recyclerView, TEmptyView emptyView, boolean isVisible) {
             if (isVisible) {
                 recyclerView.setVisibility(View.VISIBLE);
                 emptyView.setVisibility(View.GONE);
