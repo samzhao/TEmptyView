@@ -110,7 +110,7 @@ public class TViewUtil {
                     @Override
                     public void onChanged() {
                         super.onChanged();
-                        toggleRecyclerViewVisibility(recyclerView, emptyView, itemCount > 0);
+                        toggleRecyclerViewVisibility(recyclerView, emptyView, adapter.getItemCount() > 0);
                     }
                 };
                 adapter.registerAdapterDataObserver(observer);
