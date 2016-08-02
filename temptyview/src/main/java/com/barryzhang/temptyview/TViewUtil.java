@@ -96,15 +96,21 @@ public class TViewUtil {
             if(adapter != null) {
                 RecyclerView.AdapterDataObserver observer = new RecyclerView.AdapterDataObserver() {
                     @Override
+                    public void onItemRangeChanged(int positionStart, int itemCount) {
+                        super.onItemRangeChanged(positionStart, itemCount);
+                        toggleRecyclerViewVisibility(itemCount > 0);
+                    }
+        
+                    @Override
+                    public void onItemRangeInserted(int positionStart, int itemCount) {
+                        super.onItemRangeInserted(positionStart, itemCount);
+                        toggleRecyclerViewVisibility(itemCount > 0);
+                    }
+                    
+                    @Override
                     public void onChanged() {
                         super.onChanged();
-                        if (adapter.getItemCount() > 0) {
-                            recyclerView.setVisibility(View.VISIBLE);
-                            emptyView.setVisibility(View.GONE);
-                        } else {
-                            recyclerView.setVisibility(View.GONE);
-                            emptyView.setVisibility(View.VISIBLE);
-                        }
+                        toggleRecyclerViewVisibility(adapter.getItemCount() > 0);
                     }
                 };
                 adapter.registerAdapterDataObserver(observer);
@@ -114,6 +120,16 @@ public class TViewUtil {
             }
             setEmptyViewStyle(emptyView);
 
+        }
+        
+        private void toggleRecyclerViewVisibility(RecyclerView view, boolean isVisible) {
+            if (isVisible) {
+                recyclerView.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.GONE);
+            } else {
+                recyclerView.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+            }
         }
 
         private void setEmptyViewStyle(TEmptyView emptyView) {
